@@ -93,10 +93,26 @@ public class Check implements AbstractCheck {
     }
 
     public boolean setbackIfAboveSetbackVL() {
-        if (getViolations() > setbackVL) {
+        if (getViolations() > setbackVL && shouldSetback()) {
             return player.getSetbackTeleportUtil().executeViolationSetback(false);
         }
         return false;
+    }
+
+    public boolean shouldSetback() {
+        if (player.disableGrim || (experimental && !GrimAPI.INSTANCE.getConfigManager().isExperimentalChecks())) return false; // Avoid calling event if disabled
+
+        SetbackEvent event = new SetbackEvent(player, this);
+        Bukkit.getPluginManager().callEvent(event);
+        return !event.isCancelled();
+    }
+
+    public boolean shouldModifyPacket() {
+        if (player.disableGrim || (experimental && !GrimAPI.INSTANCE.getConfigManager().isExperimentalChecks())) return false; // Avoid calling event if disabled
+
+        PacketModifyEvent event = new PacketModifyEvent(player, this);
+        Bukkit.getPluginManager().callEvent(event);
+        return !event.isCancelled();
     }
 
     public String formatOffset(double offset) {

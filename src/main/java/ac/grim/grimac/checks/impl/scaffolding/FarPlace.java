@@ -39,7 +39,7 @@ public class FarPlace extends BlockPlaceCheck {
 
         if (min > maxReach * maxReach) { // fail
             flagAndAlert();
-            place.resync();
+            place.tryResync(this);
         }
     }
 }

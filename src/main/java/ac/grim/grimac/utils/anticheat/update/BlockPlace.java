@@ -1,5 +1,7 @@
 package ac.grim.grimac.utils.anticheat.update;
 
+import ac.grim.grimac.GrimAPI;
+import ac.grim.grimac.checks.Check;
 import ac.grim.grimac.player.GrimPlayer;
 import ac.grim.grimac.utils.anticheat.LogUtil;
 import ac.grim.grimac.utils.collisions.AxisSelect;
@@ -32,7 +34,9 @@ import com.github.retrooper.packetevents.util.Vector3f;
 import com.github.retrooper.packetevents.util.Vector3i;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -618,7 +622,11 @@ public class BlockPlace {
         set(getPlacedBlockPos(), state);
     }
 
-    public void resync() {
+    public void tryResync(@NotNull Check check) {
+        if (check.shouldSetback()) this.resync();
+    }
+
+    private void resync() {
         isCancelled = true;
     }
 

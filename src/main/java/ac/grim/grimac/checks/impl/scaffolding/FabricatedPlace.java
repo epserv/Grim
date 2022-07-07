@@ -24,7 +24,7 @@ public class FabricatedPlace extends BlockPlaceCheck {
 
         if (cursor.getX() < minAllowed || cursor.getY() < minAllowed || cursor.getZ() < minAllowed || cursor.getX() > allowed || cursor.getY() > allowed || cursor.getZ() > allowed) {
             flagAndAlert();
-            place.resync();
+            place.tryResync(this);
         }
     }
 }

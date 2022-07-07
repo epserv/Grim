@@ -481,6 +481,7 @@ public class CheckManagerListener extends PacketListenerAbstract {
             if (placedWith.getType().getPlacedType() != null || placedWith.getType() == ItemTypes.FIRE_CHARGE)
                 player.checkManager.onBlockPlace(blockPlace);
 
+            // l_MrBoom_l: TODO find how to use Check#shouldModifyPacket() here
             if (blockPlace.isCancelled() && player.shouldModifyPackets()) { // The player tried placing blocks in air/water
                 event.setCancelled(true);
 
